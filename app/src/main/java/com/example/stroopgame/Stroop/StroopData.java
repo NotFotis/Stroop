@@ -91,7 +91,7 @@ public class StroopData {
     }
 
     // number of correct responses to the set of stimuli
-    public int getNumberOfCorrectResponses(List<StroopData> stroopDataList) {
+    public static int getNumberOfCorrectResponses(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 1) {
@@ -102,7 +102,7 @@ public class StroopData {
     }
 
     // number of incorrect responses to the set of stimuli
-    public int getNumberOfIncorrectResponses(List<StroopData> stroopDataList) {
+    public static int getNumberOfIncorrectResponses(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 2) {
@@ -113,7 +113,7 @@ public class StroopData {
     }
 
     // number of correct responses to the set of congruent stimuli
-    public int getNumberOfCorrectResponsesCongruent(List<StroopData> stroopDataList) {
+    public static int getNumberOfCorrectResponsesCongruent(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 1 && data.getStroopColorMatch() == 1) {
@@ -124,7 +124,7 @@ public class StroopData {
     }
 
     // number of incorrect responses to the set of congruent stimuli
-    public int getNumberOfIncorrectResponsesCongruent(List<StroopData> stroopDataList) {
+    public static int getNumberOfIncorrectResponsesCongruent(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 2 && data.getStroopColorMatch() == 1) {
@@ -135,7 +135,7 @@ public class StroopData {
     }
 
     // number of correct responses to the set of non-congruent stimuli
-    public int getNumberOfCorrectResponsesNonCongruent(List<StroopData> stroopDataList) {
+    public static int getNumberOfCorrectResponsesNonCongruent(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 1 && data.getStroopColorMatch() == 0) {
@@ -146,7 +146,7 @@ public class StroopData {
     }
 
     // number of incorrect responses to the set of non-congruent stimuli
-    public int getNumberOfIncorrectResponsesNonCongruent(List<StroopData> stroopDataList) {
+    public static int getNumberOfIncorrectResponsesNonCongruent(List<StroopData> stroopDataList) {
         int count = 0;
         for (StroopData data : stroopDataList) {
             if (data.getStatus() == 2 && data.getStroopColorMatch() == 0) {
@@ -157,7 +157,7 @@ public class StroopData {
     }
 
     //function to calculate percentage of stimuli for each color
-    public Map<String,Float> calculatePercentageOfStimuliPerColor(List<StroopData> stimuli) {
+    public static Map<String,Float> calculatePercentageOfStimuliPerColor(List<StroopData> stimuli) {
         Map<String,Float> colorPercentages = new HashMap<>();
         int totalStimuli = stimuli.size();
         int yellowStimuli = 0, redStimuli = 0, blueStimuli = 0, greenStimuli = 0;
@@ -183,7 +183,7 @@ public class StroopData {
     }
 
     //function to calculate percentage of correct responses for each color
-    public Map<String,Float> calculatePercentageOfCorrectResponsesPerColor(List<StroopData> stimuli) {
+    public static Map<String,Float> calculatePercentageOfCorrectResponsesPerColor(List<StroopData> stimuli) {
         Map<String,Float> colorPercentages = new HashMap<>();
         int totalStimuli = stimuli.size();
         int yellowCorrect = 0, redCorrect = 0, blueCorrect = 0, greenCorrect = 0;
@@ -294,7 +294,5 @@ public class StroopData {
 
     }
 
-    public boolean isCongruent() {
-        return false;
-    }
+
 }

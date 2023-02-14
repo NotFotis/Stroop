@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class StroopActivity extends AppCompatActivity {
     private TextView wordDisplay;
@@ -114,39 +115,30 @@ public class StroopActivity extends AppCompatActivity {
             presentStimulus(stimuli.get(currentStimulusIndex));
         } else {
 // all stimuli have been presented, analyze the data
-            //analyzeData();
+            analyzeData();
             StroopData.averageResponseTimeToCongruentStimuli(responses);
         }
     }
-    private void analyzeData() {
-        int correctResponses = 0;
-        int correctResponsesCongruent = 0;
-        for (StroopData response : responses) {
-            if (response.isMatch()) {
-                correctResponses++;
-                if (response.isCongruent()) {
-                    correctResponsesCongruent++;
-                }
-            }
-        }
-        // calculate the accuracy
-        float accuracy = (float) correctResponses / responses.size();
-        // calculate the congruent accuracy
-        float congruentAccuracy = (float) correctResponsesCongruent /
-                StroopTest.getNumberOfCongruentStimuli();
-        // show the results
-        // ...
-        showResults(accuracy,congruentAccuracy);
-    }
-    private void showResults(float accuracy, float congruentAccuracy) {
-// create a new AlertDialog
+    public void analyzeData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(StroopActivity.this);
-// set the title
-        builder.setTitle("Results");
-// set the message
-        builder.setMessage("Accuracy: " + accuracy * 100 + "%\nCongruent Accuracy: " +
-                congruentAccuracy * 100 + "%");
-// set the positive button
+        int totalCorrectResponses = StroopData.getNumberOfCorrectResponses(responses);
+        int totalIncorrectResponses = StroopData.getNumberOfIncorrectResponses(responses);
+        int totalCorrectResponsesCongruent = StroopData.getNumberOfCorrectResponsesCongruent(responses);
+        int totalIncorrectResponsesCongruent = StroopData.getNumberOfIncorrectResponsesCongruent(responses);
+        int totalCorrectResponsesNonCongruent = StroopData.getNumberOfCorrectResponsesNonCongruent(responses);
+        int totalIncorrectResponsesNonCongruent = StroopData.getNumberOfIncorrectResponsesNonCongruent(responses);
+        Map<String,Float> stimuliPercentagesPerColor = StroopData.calculatePercentageOfStimuliPerColor(responses);
+        Map<String,Float> correctResponsesPercentagesPerColor = StroopData.calculatePercentageOfCorrectResponsesPerColor(responses);
+        builder.setMessage("Total correct Responses:" + totalCorrectResponses
+                +"Total incorrect Responses:"  + totalIncorrectResponses
+                + "Total congruent correct Responses:" + totalCorrectResponsesCongruent
+        + "Total congruent incorrect Responses:" + totalIncorrectResponsesCongruent
+        + "Total Noncongruent correct Responses:" + totalCorrectResponsesNonCongruent
+        + "Total Noncongruent incorrect Responses:" + totalIncorrectResponsesNonCongruent
+        + "Stimuli percentage per color:" + stimuliPercentagesPerColor
+        + "Correct responses percentage per color:" + correctResponsesPercentagesPerColor);
+
+        // set the positive button
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -155,5 +147,8 @@ public class StroopActivity extends AppCompatActivity {
         });
 // show the dialog
         builder.show();
+        // Add any other processing of the data here
     }
+
+
 }
