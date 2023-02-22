@@ -1,18 +1,29 @@
 package com.example.stroopgame;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
 
 public class StroopActivity extends AppCompatActivity {
 
@@ -51,7 +62,7 @@ public class StroopActivity extends AppCompatActivity {
         yellowButton = findViewById(R.id.yellow_button);
 
         // Set a 5-minute timer to end the test
-        timer = new CountDownTimer(5 * 60 * 1000, 1000) {
+        timer = new CountDownTimer(1 * 10 * 1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Display the remaining time in minutes and seconds
                 int minutes = (int) millisUntilFinished / (60 * 1000);
@@ -63,6 +74,7 @@ public class StroopActivity extends AppCompatActivity {
             public void onFinish() {
                 // Test has ended, do something here
                 computeTestResults();
+
             }
         }.start();
 
@@ -116,31 +128,36 @@ public class StroopActivity extends AppCompatActivity {
 
     private void onButtonClick(String colorName, int color) {
         long responseTime = System.currentTimeMillis() - trialList.get(trialNumber - 1).getStartTime();
-        int status;
+        int status=0;
 
-                if (wordTextView.getCurrentTextColor() == color) {
-                    // User chose the correct color
-                    correctCount++;
-                    resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+        if (wordTextView.getCurrentTextColor() == color) {
+            // User chose the correct color
+            correctCount++;
+            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            status = 1;
+        } else if (wordTextView.getCurrentTextColor() != color){
+            // User chose the wrong color
+            incorrectCount++;
+            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            status = 2;
+        }
 
-                    status = 1;
-                } else {
-                    // User chose the wrong color
-                    incorrectCount++;
-                    resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+        // Check if the user has timed out (2 seconds have passed without answer)
+        else if (responseTime >= 2000) {
+            timeoutCount++;
+            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            status = 3;
+            // Generate a new word and color for the next test
+            setRandomWordAndColor();
+        }
+        // Update the trial with the response time and status
+        trialList.get(trialNumber - 1).setResponseTime(responseTime);
+        trialList.get(trialNumber - 1).setStatus(status);
 
-                    status = 2;
-                }
+        // Generate a new word and color for the next test
+        setRandomWordAndColor();
+    }
 
-
-
-                // Update the trial with the response time and status
-                trialList.get(trialNumber - 1).setResponseTime(responseTime);
-                trialList.get(trialNumber - 1).setStatus(status);
-
-                // Generate a new word and color for the next test
-                setRandomWordAndColor();
-            }
 
     private String getColorName(int color) {
         switch (color) {
@@ -249,13 +266,17 @@ public class StroopActivity extends AppCompatActivity {
 
         // Calculate percentages and averages
         double totalPercent = 100.0 * trialList.size() / (redCount+blueCount+greenCount+yellowCount);
-        System.out.printf("Percentage of stimuli for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%%\n",
+        String message = String.format("Total percent: %.2f%% \n", totalPercent);
+
+        String message1 = String.format("Percentage of stimuli for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
                 100.0 * redCount / trialList.size(), 100.0 * blueCount / trialList.size(),
                 100.0 * greenCount / trialList.size(), 100.0 * yellowCount / trialList.size());
-        System.out.printf("Percentage of correct responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%%\n",
+
+        String message2 = String.format("Percentage of correct responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
                 100.0 * redCorrect / redCount, 100.0 * blueCorrect / blueCount,
                 100.0 * greenCorrect / greenCount, 100.0 * yellowCorrect / yellowCount);
-        System.out.printf("Percentage of incorrect responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%%\n",
+
+        String message3 = String.format("Percentage of incorrect responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
                 100.0 * redIncorrect / redCount, 100.0 * blueIncorrect / blueCount,
                 100.0 * greenIncorrect / greenCount, 100.0 * yellowIncorrect / yellowCount);
 
@@ -263,13 +284,58 @@ public class StroopActivity extends AppCompatActivity {
         double totalAvgResponseTime = (double) totalResponseTime / trialList.size();
         double congruentAvgResponseTime = (double) congruentResponseTime / congruentCount;
         double nonCongruentAvgResponseTime = (double) nonCongruentResponseTime / nonCongruentCount;
-        System.out.printf("Average response time to all stimuli: %.2f ms\n", totalAvgResponseTime);
-        System.out.printf("Average response time to congruent stimuli: %.2f ms\n", congruentAvgResponseTime);
-        System.out.printf("Average response time to non-congruent stimuli: %.2f ms\n", nonCongruentAvgResponseTime);
+        String message4 = String.format("Average response time to all stimuli: %.2f ms \n", totalAvgResponseTime);
+        String message5 = String.format("Average response time to congruent stimuli: %.2f ms \n", congruentAvgResponseTime);
+        String message6 = String.format("Average response time to non-congruent stimuli: %.2f ms \n", nonCongruentAvgResponseTime);
 
         // Calculate Stroop effect
         double stroopEffect = nonCongruentAvgResponseTime - congruentAvgResponseTime;
-        System.out.printf("Stroop effect: %.2f ms\n", stroopEffect);
+        String message7 = String.format("Stroop effect: %.2f ms\n", stroopEffect);
+
+
+        // First, create a dialog builder object
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+// Set the title and message of the dialog
+        builder.setTitle("Results");
+        builder.setMessage(message+message1+message2+message3+message4+message5+message6+message7);
+
+// Add a button to the dialog and set its listener
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog when the button is clicked
+                dialog.dismiss();
+            }
+        });
+        Button restartButton = new Button(StroopActivity.this);
+        restartButton.setText("Restart");
+
+
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Restart the application
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+        builder.setView(restartButton);
+        builder.setCancelable(false);
+        builder.show();
+
+        // create a new Result object to store the trial results
+        String username = getIntent().getStringExtra("username");
+       Result result = new Result(username,  totalPercent, 100.0 * redCount / trialList.size(), 100.0 * blueCount / trialList.size(),
+                100.0 * greenCount / trialList.size(), 100.0 * yellowCount / trialList.size(), 100.0 * redCorrect / redCount, 100.0 * blueCorrect / blueCount,
+                100.0 * greenCorrect / greenCount, 100.0 * yellowCorrect / yellowCount, 100.0 * redIncorrect / redCount, 100.0 * blueIncorrect / blueCount,
+                100.0 * greenIncorrect / greenCount, 100.0 * yellowIncorrect / yellowCount, totalAvgResponseTime, congruentAvgResponseTime, nonCongruentAvgResponseTime, stroopEffect);
+
+// insert the results into the database
+      
+        ResultsContentValues.createContentValues(result);
+
     }
 }
 
