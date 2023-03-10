@@ -1,7 +1,9 @@
 package com.example.stroopgame;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public class StroopActivity extends AppCompatActivity {
     private int timeoutCount = 0;
     private int trialNumber = 0;
     private List<Trial> trialList = new ArrayList<>();
+    private ResultsContentValues dbHandler;
 
     // Declare words and colors arrays
     private String[] words = {"RED", "BLUE", "GREEN", "YELLOW"};
@@ -51,7 +53,8 @@ public class StroopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stroop);
-
+        dbHandler = new ResultsContentValues(this);
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
         // Get references to UI elements
         wordTextView = findViewById(R.id.word_text_view);
         resultTextView = findViewById(R.id.resultTextView);
@@ -128,36 +131,35 @@ public class StroopActivity extends AppCompatActivity {
 
     private void onButtonClick(String colorName, int color) {
         long responseTime = System.currentTimeMillis() - trialList.get(trialNumber - 1).getStartTime();
-        int status=0;
+        int status = 0;
 
         if (wordTextView.getCurrentTextColor() == color) {
             // User chose the correct color
             correctCount++;
             resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 1;
-        } else if (wordTextView.getCurrentTextColor() != color){
+        } else if (wordTextView.getCurrentTextColor() != color) {
             // User chose the wrong color
             incorrectCount++;
             resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 2;
         }
-
-        // Check if the user has timed out (2 seconds have passed without answer)
-        else if (responseTime >= 2000) {
+        else if(responseTime>2000){
             timeoutCount++;
             resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
-            status = 3;
-            // Generate a new word and color for the next test
-            setRandomWordAndColor();
+            status= 3;
         }
-        // Update the trial with the response time and status
-        trialList.get(trialNumber - 1).setResponseTime(responseTime);
-        trialList.get(trialNumber - 1).setStatus(status);
 
-        // Generate a new word and color for the next test
-        setRandomWordAndColor();
+
+
+        Trial trial = trialList.get(trialNumber - 1);
+        trial.setResponseTime(responseTime);
+        trial.setStatus(status);
+
+
+            setRandomWordAndColor();
+
     }
-
 
     private String getColorName(int color) {
         switch (color) {
@@ -180,6 +182,18 @@ public class StroopActivity extends AppCompatActivity {
         int congruentIncorrect = 0;
         int nonCongruentCorrect = 0;
         int nonCongruentIncorrect = 0;
+        double redPercentage=0;
+        double bluePercentage=0;
+        double greenPercentage=0;
+        double yellowPercentage=0;
+        double redCorrectPer=0;
+        double blueCorrectPer=0;
+        double greenCorrectPer=0;
+        double yellowCorrectPer=0;
+        double redIncorrectPer=0;
+        double blueIncorrectPer=0;
+        double greenIncorrectPer=0;
+        double yellowIncorrectPer=0;
         int redCount = 0;
         int blueCount = 0;
         int greenCount = 0;
@@ -266,19 +280,31 @@ public class StroopActivity extends AppCompatActivity {
 
         // Calculate percentages and averages
         double totalPercent = 100.0 * trialList.size() / (redCount+blueCount+greenCount+yellowCount);
-        String message = String.format("Total percent: %.2f%% \n", totalPercent);
-
+//        totalCorrect= 100 * (redCorrect+blueCorrect+greenCorrect+yellowCorrect)/trialList.size();
+//        totalIncorrect =100 * (redIncorrect+blueIncorrect+greenIncorrect+yellowIncorrect)/trialList.size();
+  String message = String.format("Total percent: %.2f%% \n", totalPercent);
+//        String message0 = String.format("Total correct: %.2f%% \n", totalCorrect);
+ //       String message01 = String.format("Total incorrect: %.2f%% \n", totalIncorrect);
+        redPercentage = 100.0 * redCount / trialList.size();
+        bluePercentage = 100.0 * blueCount / trialList.size();
+        greenPercentage = 100.0 * greenCount / trialList.size();
+        yellowPercentage = 100.0 * yellowCount / trialList.size();
         String message1 = String.format("Percentage of stimuli for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
-                100.0 * redCount / trialList.size(), 100.0 * blueCount / trialList.size(),
-                100.0 * greenCount / trialList.size(), 100.0 * yellowCount / trialList.size());
+                redPercentage, bluePercentage,greenPercentage, yellowPercentage);
 
+        redCorrectPer =  100.0 * redCorrect / redCount;
+        blueCorrectPer = 100.0 * blueCorrect / blueCount;
+        greenCorrectPer = 100.0 * greenCorrect / greenCount;
+        yellowCorrectPer = 100.0 * yellowCorrect / yellowCount;
         String message2 = String.format("Percentage of correct responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
-                100.0 * redCorrect / redCount, 100.0 * blueCorrect / blueCount,
-                100.0 * greenCorrect / greenCount, 100.0 * yellowCorrect / yellowCount);
+                redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer);
 
+        redIncorrectPer =  100.0 * redIncorrect / redCount;
+        blueIncorrectPer = 100.0 * blueIncorrect / blueCount;
+        greenIncorrectPer = 100.0 * greenIncorrect / greenCount;
+        yellowIncorrectPer = 100.0 * yellowIncorrect / yellowCount;
         String message3 = String.format("Percentage of incorrect responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
-                100.0 * redIncorrect / redCount, 100.0 * blueIncorrect / blueCount,
-                100.0 * greenIncorrect / greenCount, 100.0 * yellowIncorrect / yellowCount);
+              redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer);
 
         // Calculate average response times
         double totalAvgResponseTime = (double) totalResponseTime / trialList.size();
@@ -300,14 +326,9 @@ public class StroopActivity extends AppCompatActivity {
         builder.setTitle("Results");
         builder.setMessage(message+message1+message2+message3+message4+message5+message6+message7);
 
+
 // Add a button to the dialog and set its listener
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Dismiss the dialog when the button is clicked
-                dialog.dismiss();
-            }
-        });
+
         Button restartButton = new Button(StroopActivity.this);
         restartButton.setText("Restart");
 
@@ -327,14 +348,13 @@ public class StroopActivity extends AppCompatActivity {
 
         // create a new Result object to store the trial results
         String username = getIntent().getStringExtra("username");
-       Result result = new Result(username,  totalPercent, 100.0 * redCount / trialList.size(), 100.0 * blueCount / trialList.size(),
-                100.0 * greenCount / trialList.size(), 100.0 * yellowCount / trialList.size(), 100.0 * redCorrect / redCount, 100.0 * blueCorrect / blueCount,
-                100.0 * greenCorrect / greenCount, 100.0 * yellowCorrect / yellowCount, 100.0 * redIncorrect / redCount, 100.0 * blueIncorrect / blueCount,
-                100.0 * greenIncorrect / greenCount, 100.0 * yellowIncorrect / yellowCount, totalAvgResponseTime, congruentAvgResponseTime, nonCongruentAvgResponseTime, stroopEffect);
+
 
 // insert the results into the database
-      
-        ResultsContentValues.createContentValues(result);
+
+        dbHandler.createContentValues(username,totalPercent,redPercentage,bluePercentage,greenPercentage,yellowPercentage,redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer,
+                redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer,
+        totalAvgResponseTime,congruentAvgResponseTime,nonCongruentAvgResponseTime,stroopEffect);
 
     }
 }

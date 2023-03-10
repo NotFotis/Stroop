@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
 
+
     private SQLiteDatabase database;
 
     @Override
@@ -28,9 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
 
-        database = openOrCreateDatabase("users", MODE_PRIVATE, null);
+        database = openOrCreateDatabase("users.db", MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS users (username VARCHAR, password VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS results (username VARCHAR, date DATE, total_percent DOUBLE, red_percent DOUBLE, blue_percent DOUBLE, green_percent DOUBLE, yellow_percent DOUBLE, red_correct DOUBLE, blue_correct DOUBLE, green_correct DOUBLE, yellow_correct DOUBLE, red_incorrect DOUBLE, blue_incorrect DOUBLE, green_incorrect DOUBLE, yellow_incorrect DOUBLE, total_avg_response_time DOUBLE, congruent_avg_response_time DOUBLE, non_congruent_avg_response_time DOUBLE, stroop_effect DOUBLE)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Stroop (username VARCHAR, total_percent DOUBLE, red_percent DOUBLE, blue_percent DOUBLE, green_percent DOUBLE, yellow_percent DOUBLE, red_correct_percent DOUBLE, blue_correct_percent DOUBLE, green_correct_percent DOUBLE, yellow_correct_percent DOUBLE, red_incorrect_percent DOUBLE, blue_incorrect_percent DOUBLE, green_incorrect_percent DOUBLE, yellow_incorrect_percent DOUBLE, total_response_time DOUBLE, congruent_response_time DOUBLE, non_congruent_response_time DOUBLE, stroop_effect DOUBLE)");
 
         Button loginButton = findViewById(R.id.login);
         loginButton.setOnClickListener(new View.OnClickListener() {

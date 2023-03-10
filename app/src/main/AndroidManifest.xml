@@ -12,9 +12,6 @@
         android:theme="@style/Theme.StroopGame"
         tools:targetApi="31">
         <activity
-            android:name=".ResultsActivity"
-            android:exported="false" />
-        <activity
             android:name=".StroopActivity"
             android:exported="false" />
         <activity
