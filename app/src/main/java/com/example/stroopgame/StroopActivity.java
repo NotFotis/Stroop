@@ -45,7 +45,7 @@ public class StroopActivity extends AppCompatActivity {
     private ResultsContentValues dbHandler;
 
     // Declare words and colors arrays
-    private String[] words = {"RED", "BLUE", "GREEN", "YELLOW"};
+    private String[] words = {"ΚΟΚΚΙΝΟ", "ΜΠΛΕ", "ΠΡΑΣΙΝΟ", "ΚΙΤΡΙΝΟ"};
     private int[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
 
 
@@ -71,7 +71,7 @@ public class StroopActivity extends AppCompatActivity {
                 int minutes = (int) millisUntilFinished / (60 * 1000);
                 int seconds = (int) (millisUntilFinished / 1000) % 60;
                 String timeLeft = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-                timeTextView.setText("Time left: " + timeLeft);
+                timeTextView.setText("ΧΡΟΝΟΣ: " + timeLeft);
             }
 
             public void onFinish() {
@@ -88,28 +88,28 @@ public class StroopActivity extends AppCompatActivity {
         redButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonClick("RED", Color.RED);
+                onButtonClick("ΚΟΚΚΙΝΟ", Color.RED);
             }
         });
 
         blueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonClick("BLUE", Color.BLUE);
+                onButtonClick("ΜΠΛΕ", Color.BLUE);
             }
         });
 
         greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonClick("GREEN", Color.GREEN);
+                onButtonClick("ΠΡΑΣΙΝΟ", Color.GREEN);
             }
         });
 
         yellowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonClick("YELLOW", Color.YELLOW);
+                onButtonClick("ΚΙΤΡΙΝΟ", Color.YELLOW);
             }
         });
     }
@@ -136,17 +136,17 @@ public class StroopActivity extends AppCompatActivity {
         if (wordTextView.getCurrentTextColor() == color) {
             // User chose the correct color
             correctCount++;
-            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 1;
         } else if (wordTextView.getCurrentTextColor() != color) {
             // User chose the wrong color
             incorrectCount++;
-            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 2;
         }
         else if(responseTime>2000){
             timeoutCount++;
-            resultTextView.setText("Correct: " + correctCount + " Incorrect: " + incorrectCount + " Timeout: " + timeoutCount);
+            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             status= 3;
         }
 
@@ -164,13 +164,13 @@ public class StroopActivity extends AppCompatActivity {
     private String getColorName(int color) {
         switch (color) {
             case Color.RED:
-                return "RED";
+                return "ΚΟΚΚΙΝΟ";
             case Color.BLUE:
-                return "BLUE";
+                return "ΜΠΛΕ";
             case Color.GREEN:
-                return "GREEN";
+                return "ΠΡΑΣΙΝΟ";
             case Color.YELLOW:
-                return "YELLOW";
+                return "ΚΙΤΡΙΝΟ";
             default:
                 return "UNKNOWN";
         }
@@ -232,7 +232,7 @@ public class StroopActivity extends AppCompatActivity {
 
             // Count responses by color
             switch (trial.getWord()) {
-                case "RED":
+                case "ΚΟΚΚΙΝΟ":
                     redCount++;
                     if (trial.getStatus() == 1) {
                         redCorrect++;
@@ -240,7 +240,7 @@ public class StroopActivity extends AppCompatActivity {
                         redIncorrect++;
                     }
                     break;
-                case "BLUE":
+                case "ΜΠΛΕ":
                     blueCount++;
                     if (trial.getStatus() == 1) {
                         blueCorrect++;
@@ -248,7 +248,7 @@ public class StroopActivity extends AppCompatActivity {
                         blueIncorrect++;
                     }
                     break;
-                case "GREEN":
+                case "ΠΡΑΣΙΝΟ":
                     greenCount++;
                     if (trial.getStatus() == 1) {
                         greenCorrect++;
@@ -256,7 +256,7 @@ public class StroopActivity extends AppCompatActivity {
                         greenIncorrect++;
                     }
                     break;
-                case "YELLOW":
+                case "ΚΙΤΡΙΝΟ":
                     yellowCount++;
                     if (trial.getStatus() == 1) {
                         yellowCorrect++;
@@ -323,14 +323,14 @@ public class StroopActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 // Set the title and message of the dialog
-        builder.setTitle("Results");
+        builder.setTitle("ΑΠΟΤΕΛΕΣΜΑΤΑ");
         builder.setMessage(message+message1+message2+message3+message4+message5+message6+message7);
 
 
 // Add a button to the dialog and set its listener
 
         Button restartButton = new Button(StroopActivity.this);
-        restartButton.setText("Restart");
+        restartButton.setText("ΕΠΑΝΕΚΚΙΝΗΣΗ");
 
 
         restartButton.setOnClickListener(new View.OnClickListener() {
