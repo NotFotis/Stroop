@@ -1,4 +1,3 @@
-
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.StroopGame" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -14,4 +13,13 @@
 
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.StroopGame.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.StroopGame.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.StroopGame.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

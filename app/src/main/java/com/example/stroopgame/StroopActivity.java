@@ -65,20 +65,23 @@ public class StroopActivity extends AppCompatActivity {
         yellowButton = findViewById(R.id.yellow_button);
 
         // Set a 5-minute timer to end the test
-        timer = new CountDownTimer(1 * 10 * 1000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Display the remaining time in minutes and seconds
-                int minutes = (int) millisUntilFinished / (60 * 1000);
-                int seconds = (int) (millisUntilFinished / 1000) % 60;
-                String timeLeft = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-                timeTextView.setText("ΧΡΟΝΟΣ: " + timeLeft);
-            }
+        int duration = getIntent().getIntExtra("duration", 60000); // Default duration of 10 seconds
+        timer = new CountDownTimer(duration, 1000) {
 
-            public void onFinish() {
-                // Test has ended, do something here
-                computeTestResults();
+                public void onTick ( long millisUntilFinished){
+                    // Display the remaining time in minutes and seconds
+                    int minutes = (int) millisUntilFinished / (60 * 1000);
+                    int seconds = (int) (millisUntilFinished / 1000) % 60;
+                    String timeLeft = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                    timeTextView.setText("ΧΡΟΝΟΣ: " + timeLeft);
+                }
 
-            }
+                public void onFinish () {
+                    // Test has ended, do something here
+                    computeTestResults();
+
+                }
+
         }.start();
 
         // Set the first word and color
