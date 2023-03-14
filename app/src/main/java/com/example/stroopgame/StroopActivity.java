@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -129,12 +130,17 @@ public class StroopActivity extends AppCompatActivity {
         boolean isMatch = (words[index].equals(getColorName(colors[index])));
         trialNumber++;
         Trial trial = new Trial(trialNumber, words[index], getColorName(colors[index]), isMatch, 0, 0, 0);
+        trial.setStartTime(System.currentTimeMillis());
         trialList.add(trial);
     }
 
     private void onButtonClick(String colorName, int color) {
         long responseTime = System.currentTimeMillis() - trialList.get(trialNumber - 1).getStartTime();
+        long responseTimeInSeconds = responseTime / 1000;
+
         int status = 0;
+        Log.d("DEBUG", "Response time: " + responseTimeInSeconds);
+        Log.d("DEBUG", "Current text color: " + wordTextView.getCurrentTextColor() + ", color: " + color);
 
         if (wordTextView.getCurrentTextColor() == color) {
             // User chose the correct color
@@ -147,23 +153,28 @@ public class StroopActivity extends AppCompatActivity {
             resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 2;
         }
-        else if(responseTime>2000){
-            timeoutCount++;
-            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
-            status= 3;
-        }
 
 
 
         Trial trial = trialList.get(trialNumber - 1);
-        trial.setResponseTime(responseTime);
+        trial.setResponseTime(System.currentTimeMillis() - trial.getStartTime());
         trial.setStatus(status);
 
-
-            setRandomWordAndColor();
+        checkResponseTime();
+        setRandomWordAndColor();
 
     }
-
+    private void checkResponseTime() {
+        long responseTime = System.currentTimeMillis() -  trialList.get(trialNumber - 1).getStartTime();
+        if (responseTime > 2000) {
+            timeoutCount++;
+            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
+            Trial trial = trialList.get(trialNumber - 1);
+            trial.setResponseTime(responseTime);
+            trial.setStatus(3);
+            setRandomWordAndColor();
+        }
+    }
     private String getColorName(int color) {
         switch (color) {
             case Color.RED:
@@ -185,6 +196,7 @@ public class StroopActivity extends AppCompatActivity {
         int congruentIncorrect = 0;
         int nonCongruentCorrect = 0;
         int nonCongruentIncorrect = 0;
+        int totalTimeout=0;
         double redPercentage=0;
         double bluePercentage=0;
         double greenPercentage=0;
@@ -224,13 +236,16 @@ public class StroopActivity extends AppCompatActivity {
                 } else {
                     nonCongruentCorrect++;
                 }
-            } else {
+            } else if (trial.getStatus()==2) {
                 totalIncorrect++;
                 if (trial.isColorMatch()) {
                     congruentIncorrect++;
                 } else {
                     nonCongruentIncorrect++;
                 }
+            } else if (trial.getStatus()==3) {
+                totalTimeout++;
+
             }
 
             // Count responses by color
@@ -285,7 +300,7 @@ public class StroopActivity extends AppCompatActivity {
         double totalPercent = 100.0 * trialList.size() / (redCount+blueCount+greenCount+yellowCount);
 //        totalCorrect= 100 * (redCorrect+blueCorrect+greenCorrect+yellowCorrect)/trialList.size();
 //        totalIncorrect =100 * (redIncorrect+blueIncorrect+greenIncorrect+yellowIncorrect)/trialList.size();
-  String message = String.format("Total percent: %.2f%% \n", totalPercent);
+  String message = String.format("Total percent: %.2f%% , Total timeout: %d\n", totalPercent,totalTimeout);
 //        String message0 = String.format("Total correct: %.2f%% \n", totalCorrect);
  //       String message01 = String.format("Total incorrect: %.2f%% \n", totalIncorrect);
         redPercentage = 100.0 * redCount / trialList.size();

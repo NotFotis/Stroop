@@ -8,7 +8,7 @@ public class Trial {
     private int colorChoice;
     private int status;
     private long responseTime;
-    private long startTime;
+    private long startTime ;
 
     public void setSequenceNumber(int sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
