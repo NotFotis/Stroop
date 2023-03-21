@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,9 +43,10 @@ public class StroopActivity extends AppCompatActivity {
     private int incorrectCount = 0;
     private int timeoutCount = 0;
     private int trialNumber = 0;
+    private long timeout=0;
     private List<Trial> trialList = new ArrayList<>();
     private ResultsContentValues dbHandler;
-
+    Handler handler = new Handler();
     // Declare words and colors arrays
     private String[] words = {"ΚΟΚΚΙΝΟ", "ΜΠΛΕ", "ΠΡΑΣΙΝΟ", "ΚΙΤΡΙΝΟ"};
     private int[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
@@ -121,17 +123,34 @@ public class StroopActivity extends AppCompatActivity {
     private void setRandomWordAndColor() {
         // Get a random index for the words and colors arrays
         int index = new Random().nextInt(words.length);
-        int Colorindex = new Random().nextInt(colors.length);
+        int colorIndex = new Random().nextInt(colors.length);
+
         // Set the word text and color
         wordTextView.setText(words[index]);
-        wordTextView.setTextColor(colors[Colorindex]);
+        wordTextView.setTextColor(colors[colorIndex]);
 
         // Set the Stroop color match
-        boolean isMatch = (words[index].equals(getColorName(colors[index])));
+        boolean isMatch = (words[index].equals(getColorName(colors[colorIndex])));
         trialNumber++;
-        Trial trial = new Trial(trialNumber, words[index], getColorName(colors[index]), isMatch, 0, 0, 0);
+        Trial trial = new Trial(trialNumber, words[index], getColorName(colors[colorIndex]), isMatch, 0, 0, 0);
         trial.setStartTime(System.currentTimeMillis());
         trialList.add(trial);
+        int age = getIntent().getIntExtra("age", 50);
+        // Start a new trial after the timeout
+        if (age > 50) {
+            timeout = 8000;
+        } else if (age < 50 && age > 20) {
+            timeout = 5000;
+        }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(trial.getStatus()==0) {
+                    checkResponseTime();
+
+                }
+            }
+        }, timeout);
     }
 
     private void onButtonClick(String colorName, int color) {
@@ -143,11 +162,13 @@ public class StroopActivity extends AppCompatActivity {
         Log.d("DEBUG", "Current text color: " + wordTextView.getCurrentTextColor() + ", color: " + color);
 
         if (wordTextView.getCurrentTextColor() == color) {
+            checkResponseTime();
             // User chose the correct color
             correctCount++;
             resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             status = 1;
         } else if (wordTextView.getCurrentTextColor() != color) {
+            checkResponseTime();
             // User chose the wrong color
             incorrectCount++;
             resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
@@ -160,13 +181,20 @@ public class StroopActivity extends AppCompatActivity {
         trial.setResponseTime(System.currentTimeMillis() - trial.getStartTime());
         trial.setStatus(status);
 
-        checkResponseTime();
+
         setRandomWordAndColor();
 
     }
     private void checkResponseTime() {
-        long responseTime = System.currentTimeMillis() -  trialList.get(trialNumber - 1).getStartTime();
-        if (responseTime > 2000) {
+        int age = getIntent().getIntExtra("age", 50);
+        long responseTime = System.currentTimeMillis() - trialList.get(trialNumber - 1).getStartTime();
+        if (age > 50) {
+            timeout = 8000;
+        } else if (age < 50 && age > 20) {
+            timeout = 5000;
+        }
+
+        if (responseTime > timeout) {
             timeoutCount++;
             resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
             Trial trial = trialList.get(trialNumber - 1);
@@ -190,6 +218,7 @@ public class StroopActivity extends AppCompatActivity {
         }
     }
     private void computeTestResults() {
+        int totalTrials = trialList.size();
         int totalCorrect = 0;
         int totalIncorrect = 0;
         int congruentCorrect = 0;
@@ -226,8 +255,10 @@ public class StroopActivity extends AppCompatActivity {
         long nonCongruentResponseTime = 0;
         int congruentCount = 0;
         int nonCongruentCount = 0;
+        Date date = new Date(System.currentTimeMillis());
 
         for (Trial trial : trialList) {
+
             // Count correct and incorrect responses
             if (trial.getStatus() == 1) {
                 totalCorrect++;
@@ -326,8 +357,8 @@ public class StroopActivity extends AppCompatActivity {
 
         // Calculate average response times
         double totalAvgResponseTime = (double) totalResponseTime / trialList.size();
-        double congruentAvgResponseTime = (double) congruentResponseTime / congruentCount;
-        double nonCongruentAvgResponseTime = (double) nonCongruentResponseTime / nonCongruentCount;
+        double congruentAvgResponseTime = (double) congruentResponseTime / (double) congruentCount/1000.0;
+        double nonCongruentAvgResponseTime = (double) nonCongruentResponseTime/ (double) nonCongruentCount / 1000.0;
         String message4 = String.format("Average response time to all stimuli: %.2f ms \n", totalAvgResponseTime);
         String message5 = String.format("Average response time to congruent stimuli: %.2f ms \n", congruentAvgResponseTime);
         String message6 = String.format("Average response time to non-congruent stimuli: %.2f ms \n", nonCongruentAvgResponseTime);
@@ -370,7 +401,7 @@ public class StroopActivity extends AppCompatActivity {
 
 // insert the results into the database
 
-        dbHandler.createContentValues(username,totalPercent,redPercentage,bluePercentage,greenPercentage,yellowPercentage,redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer,
+        dbHandler.createContentValues(username,date,totalPercent,redPercentage,bluePercentage,greenPercentage,yellowPercentage,redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer,
                 redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer,
         totalAvgResponseTime,congruentAvgResponseTime,nonCongruentAvgResponseTime,stroopEffect);
 
