@@ -44,6 +44,7 @@ public class StroopActivity extends AppCompatActivity {
     private int timeoutCount = 0;
     private int trialNumber = 0;
     private long timeout=0;
+    private  int sequenceNumber=0;
     private List<Trial> trialList = new ArrayList<>();
     private ResultsContentValues dbHandler;
     Handler handler = new Handler();
@@ -125,9 +126,14 @@ public class StroopActivity extends AppCompatActivity {
         int index = new Random().nextInt(words.length);
         int colorIndex = new Random().nextInt(colors.length);
 
+        // Increment the sequence number
+        sequenceNumber++;
+
         // Set the word text and color
-        wordTextView.setText(words[index]);
+        String wordText = words[index];
+        wordTextView.setText(wordText);
         wordTextView.setTextColor(colors[colorIndex]);
+
 
         // Set the Stroop color match
         boolean isMatch = (words[index].equals(getColorName(colors[colorIndex])));
@@ -135,13 +141,9 @@ public class StroopActivity extends AppCompatActivity {
         Trial trial = new Trial(trialNumber, words[index], getColorName(colors[colorIndex]), isMatch, 0, 0, 0);
         trial.setStartTime(System.currentTimeMillis());
         trialList.add(trial);
-        int age = getIntent().getIntExtra("age", 50);
+        int duration2 = getIntent().getIntExtra("duration2", 1000); // Default duration of 10 seconds
         // Start a new trial after the timeout
-        if (age > 50) {
-            timeout = 8000;
-        } else if (age < 50 && age > 20) {
-            timeout = 5000;
-        }
+        timeout=duration2;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -186,13 +188,9 @@ public class StroopActivity extends AppCompatActivity {
 
     }
     private void checkResponseTime() {
-        int age = getIntent().getIntExtra("age", 50);
+        int duration2 = getIntent().getIntExtra("duration2", 1000); // Default duration of 10 seconds
         long responseTime = System.currentTimeMillis() - trialList.get(trialNumber - 1).getStartTime();
-        if (age > 50) {
-            timeout = 8000;
-        } else if (age < 50 && age > 20) {
-            timeout = 5000;
-        }
+        timeout=duration2;
 
         if (responseTime > timeout) {
             timeoutCount++;
@@ -331,41 +329,44 @@ public class StroopActivity extends AppCompatActivity {
         double totalPercent = 100.0 * trialList.size() / (redCount+blueCount+greenCount+yellowCount);
 //        totalCorrect= 100 * (redCorrect+blueCorrect+greenCorrect+yellowCorrect)/trialList.size();
 //        totalIncorrect =100 * (redIncorrect+blueIncorrect+greenIncorrect+yellowIncorrect)/trialList.size();
-  String message = String.format("Total percent: %.2f%% , Total timeout: %d\n", totalPercent,totalTimeout);
-//        String message0 = String.format("Total correct: %.2f%% \n", totalCorrect);
- //       String message01 = String.format("Total incorrect: %.2f%% \n", totalIncorrect);
+  String message = String.format("Πλήθος σωστών αποκρίσεων: %d από %d αποκρίσεις \n\n", totalCorrect,trialList.size());
+  String message0 = String.format("Πλήθος λανθασμένων αποκρίσεων: %d από %d αποκρίσεις \" \n\n", totalIncorrect,trialList.size());
+        String message01 = String.format("πλήθος σωστών αποκρίσεων στο σύνολο των congruent ερεθισμάτων: %d \n\n", congruentCorrect);
+        String message02 = String.format("πλήθος λανθασμένων αποκρίσεων στο σύνολο των congruent ερεθισμάτων: %d \n\n", congruentIncorrect);
+        String message03 = String.format("πλήθος σωστών αποκρίσεων στο σύνολο των non-congruent ερεθισμάτων: %d \n\n", nonCongruentCorrect);
+        String message04 = String.format("πλήθος λανθασμένων αποκρίσεων στο σύνολο των non-congruent ερεθισμάτων: %d \n\n", nonCongruentIncorrect);
         redPercentage = 100.0 * redCount / trialList.size();
         bluePercentage = 100.0 * blueCount / trialList.size();
         greenPercentage = 100.0 * greenCount / trialList.size();
         yellowPercentage = 100.0 * yellowCount / trialList.size();
-        String message1 = String.format("Percentage of stimuli for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
+        String message1 = String.format("ποσοστό ερεθισμάτων για κάθε χρώμα: Κόκκινο: %.2f%%, Μπλε: %.2f%%, Πράσινο: %.2f%%, Κίτρινο: %.2f%% \n\n",
                 redPercentage, bluePercentage,greenPercentage, yellowPercentage);
 
         redCorrectPer =  100.0 * redCorrect / redCount;
         blueCorrectPer = 100.0 * blueCorrect / blueCount;
         greenCorrectPer = 100.0 * greenCorrect / greenCount;
         yellowCorrectPer = 100.0 * yellowCorrect / yellowCount;
-        String message2 = String.format("Percentage of correct responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
+        String message2 = String.format("ποσοστό σωστών αποκρίσεων για κάθε χρώμα: Κόκκινο: %.2f%%, Μπλε: %.2f%%, Πράσινο: %.2f%%, Κίτρινο: %.2f%% \n\n",
                 redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer);
 
         redIncorrectPer =  100.0 * redIncorrect / redCount;
         blueIncorrectPer = 100.0 * blueIncorrect / blueCount;
         greenIncorrectPer = 100.0 * greenIncorrect / greenCount;
         yellowIncorrectPer = 100.0 * yellowIncorrect / yellowCount;
-        String message3 = String.format("Percentage of incorrect responses for each color: Red: %.2f%%, Blue: %.2f%%, Green: %.2f%%, Yellow: %.2f%% \n",
+        String message3 = String.format("ποσοστό λανθασμένων αποκρίσεων για κάθε χρώμα: Κόκκινο: %.2f%%, Μπλε: %.2f%%, Πράσινο: %.2f%%, Κίτρινο: %.2f%% \n\n",
               redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer);
 
         // Calculate average response times
         double totalAvgResponseTime = (double) totalResponseTime / trialList.size();
-        double congruentAvgResponseTime = (double) congruentResponseTime / (double) congruentCount/1000.0;
-        double nonCongruentAvgResponseTime = (double) nonCongruentResponseTime/ (double) nonCongruentCount / 1000.0;
-        String message4 = String.format("Average response time to all stimuli: %.2f ms \n", totalAvgResponseTime);
-        String message5 = String.format("Average response time to congruent stimuli: %.2f ms \n", congruentAvgResponseTime);
-        String message6 = String.format("Average response time to non-congruent stimuli: %.2f ms \n", nonCongruentAvgResponseTime);
+        double congruentAvgResponseTime = (double) congruentResponseTime / (double) congruentCount;
+        double nonCongruentAvgResponseTime = (double) nonCongruentResponseTime/ (double) nonCongruentCount ;
+        String message4 = String.format("average response time στο σύνολο των ερεθισμάτων: %.2f ms \n\n", totalAvgResponseTime);
+        String message5 = String.format("average response time στο σύνολο των congruent ερεθισμάτων: %.2f ms \n\n", congruentAvgResponseTime);
+        String message6 = String.format("average response time στο σύνολο των non-congruent ερεθισμάτων: %.2f ms \n\n", nonCongruentAvgResponseTime);
 
         // Calculate Stroop effect
         double stroopEffect = nonCongruentAvgResponseTime - congruentAvgResponseTime;
-        String message7 = String.format("Stroop effect: %.2f ms\n", stroopEffect);
+        String message7 = String.format("Stroop effect: %.2f ms\n\n", stroopEffect);
 
 
         // First, create a dialog builder object
@@ -373,25 +374,20 @@ public class StroopActivity extends AppCompatActivity {
 
 // Set the title and message of the dialog
         builder.setTitle("ΑΠΟΤΕΛΕΣΜΑΤΑ");
-        builder.setMessage(message+message1+message2+message3+message4+message5+message6+message7);
+
+        builder.setMessage(message+message0+message01+message02+message03+message04+message1+message2+message3+message4+message5+message6+message7);
 
 
 // Add a button to the dialog and set its listener
 
-        Button restartButton = new Button(StroopActivity.this);
-        restartButton.setText("ΕΠΑΝΕΚΚΙΝΗΣΗ");
-
-
-        restartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        builder.setPositiveButton("Αρχική Σελίδα", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 // Restart the application
-                Intent intent = getIntent();
-                finish();
+                Intent intent = new Intent(StroopActivity.this, RegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
-        builder.setView(restartButton);
         builder.setCancelable(false);
         builder.show();
 
@@ -401,9 +397,8 @@ public class StroopActivity extends AppCompatActivity {
 
 // insert the results into the database
 
-        dbHandler.createContentValues(username,date,totalPercent,redPercentage,bluePercentage,greenPercentage,yellowPercentage,redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer,
-                redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer,
-        totalAvgResponseTime,congruentAvgResponseTime,nonCongruentAvgResponseTime,stroopEffect);
+        dbHandler.createContentValues(username,date,totalCorrect,totalIncorrect,congruentCorrect,congruentIncorrect,nonCongruentCorrect,nonCongruentIncorrect,redPercentage,bluePercentage,greenPercentage,yellowPercentage,redCorrectPer,blueCorrectPer,greenCorrectPer,yellowCorrectPer,
+                redIncorrectPer,blueIncorrectPer,greenIncorrectPer,yellowIncorrectPer,totalAvgResponseTime,congruentAvgResponseTime,nonCongruentAvgResponseTime,stroopEffect);
 
     }
 }

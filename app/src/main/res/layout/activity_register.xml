@@ -6,21 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="10dp"
+        android:text="Εισαγωγή διάρκειας δοκιμασίας σε λεπτά"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/durationSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/timerTextView2"
+        android:layout_width="65dp"
+        android:layout_height="36dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="252dp"
+        android:text="00:00"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/durationSeekBar2" />
+
     <EditText
         android:id="@+id/username"
         android:layout_width="228dp"
         android:layout_height="49dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="10dp"
         android:hint="Όνομα"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="228dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="25dp"
+        android:hint="Ηλικία"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/register"
@@ -28,11 +72,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="139dp"
         android:layout_marginEnd="174dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="44dp"
         android:text="ΕΙΣΟΔΟΣ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -40,9 +84,9 @@
         android:layout_width="291dp"
         android:layout_height="20dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="62dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:text="Παρακαλώ εισάγετε το όνομά σας"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/username"
@@ -56,97 +100,93 @@
         android:layout_width="343dp"
         android:layout_height="82dp"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="34dp"
+        android:layout_marginBottom="25dp"
         android:text="Stroop Test"
         android:textAlignment="center"
         android:textColor="#673AB7"
         android:textSize="48sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/durationSeekBar"
-        android:layout_width="249dp"
-        android:layout_height="23dp"
+        android:layout_width="254dp"
+        android:layout_height="24dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
         android:max="60"
         android:progress="10"
-        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/timerTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/timerTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="30dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="168dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="213dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
         android:text="00:00"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/durationSeekBar"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="231dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginBottom="12dp"
-        android:text="Εισαγωγή διάρκειας δοκιμασίας"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/durationSeekBar"
-        app:layout_constraintEnd_toStartOf="@+id/timerTextView"
+    <SeekBar
+        android:id="@+id/durationSeekBar2"
+        android:layout_width="261dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toStartOf="@+id/timerTextView2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age" />
-
-    <EditText
-        android:id="@+id/age"
-        android:layout_width="204dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="9dp"
-        android:ems="10"
-        android:hint="Ηλικία"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView5"
+        android:layout_width="295dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="10dp"
+        android:text="Εισαγωγή χρόνου μεταξύ ερεθισμάτων σε δευτερόλεπτα"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/durationSeekBar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/durationSeekBar" />
+
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="126dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="10dp"
         android:text="Παρακαλώ εισάγετε την ηλικία σας"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/age"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/durationSeekBar2"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

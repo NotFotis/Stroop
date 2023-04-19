@@ -8,10 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "strooptest.db";
-    public static final String TABLE_NAME = "users";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "username";
-    public static final String COL_3 = "age";
+
 
 
     public DatabaseHelper(Context context) {
@@ -23,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String SQL_CREATE_USERS_TABLE = "CREATE TABLE " + UserContract.UserEntry.TABLE_NAME + " ("
                 + UserContract.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + UserContract.UserEntry.COLUMN_NAME_USERNAME + " TEXT NOT NULL,"
-                + UserContract.UserEntry.COLUMN_NAME_AGE + " INTEGER NOT NULL );";
+                + UserContract.UserEntry.COLUMN_NAME_AGE + " INTEGER  );";
 
 
         db.execSQL(SQL_CREATE_USERS_TABLE);

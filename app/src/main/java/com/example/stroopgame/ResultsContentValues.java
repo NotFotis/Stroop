@@ -14,7 +14,12 @@ public class ResultsContentValues extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "Stroop";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_DATE = "date";
-    public static final String COLUMN_TOTAL_PERCENT = "total_percent";
+    public static final String COLUMN_TOTAL_CORRECT = "total_correct";
+    public static final String COLUMN_TOTAL_INCORRECT = "total_incorrect";
+    public static final String COLUMN_TOTAL_CONGRUENT_CORRECT = "congruent_correct";
+    public static final String COLUMN_TOTAL_CONGRUENT_INCORRECT = "congruent_incorrect";
+    public static final String COLUMN_TOTAL_NON_CONGRUENT_CORRECT = "noncongruent_correct";
+    public static final String COLUMN_TOTAL_NON_CONGRUENT_INCORRECT = "noncongruent_incorrect";
     public static final String COLUMN_RED_PERCENT = "red_percent";
     public static final String COLUMN_BLUE_PERCENT = "blue_percent";
     public static final String COLUMN_GREEN_PERCENT = "green_percent";
@@ -38,7 +43,8 @@ public class ResultsContentValues extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE IF NOT EXISTS " +TABLE_NAME+"("+COLUMN_USERNAME + "VARCHAR,"+ COLUMN_DATE +"DATE,"+ COLUMN_TOTAL_PERCENT + "DOUBLE," + COLUMN_RED_PERCENT + "DOUBLE,"+ COLUMN_BLUE_PERCENT + "DOUBLE,"
+        String query = "CREATE TABLE IF NOT EXISTS " +TABLE_NAME+"("+COLUMN_USERNAME + "VARCHAR,"+ COLUMN_DATE +"DATE,"+ COLUMN_TOTAL_CORRECT + "INTEGER,"+ COLUMN_TOTAL_INCORRECT + "INTEGER,"+ COLUMN_TOTAL_CONGRUENT_CORRECT + "INTEGER,"
+                + COLUMN_TOTAL_CONGRUENT_INCORRECT + "INTEGER,"+ COLUMN_TOTAL_NON_CONGRUENT_CORRECT + "INTEGER,"+ COLUMN_TOTAL_NON_CONGRUENT_INCORRECT + "INTEGER,"+ COLUMN_RED_PERCENT + "DOUBLE,"+ COLUMN_BLUE_PERCENT + "DOUBLE,"
                 + COLUMN_GREEN_PERCENT + "DOUBLE," + COLUMN_YELLOW_PERCENT + "DOUBLE," + COLUMN_RED_CORRECT_PERCENT + "DOUBLE," + COLUMN_BLUE_CORRECT_PERCENT + "DOUBLE,"
                 + COLUMN_GREEN_CORRECT_PERCENT + "DOUBLE," + COLUMN_YELLOW_CORRECT_PERCENT + "DOUBLE," + COLUMN_RED_INCORRECT_PERCENT + "DOUBLE," + COLUMN_BLUE_INCORRECT_PERCENT + "DOUBLE,"
                 + COLUMN_GREEN_INCORRECT_PERCENT + "DOUBLE," + COLUMN_YELLOW_INCORRECT_PERCENT + "DOUBLE," + COLUMN_TOTAL_RESPONSE_TIME + "DOUBLE," + COLUMN_CONGRUENT_RESPONSE_TIME + "DOUBLE,"
@@ -55,9 +61,10 @@ public class ResultsContentValues extends SQLiteOpenHelper {
     }
 
 
-    public void  createContentValues(String username, Date date, Double totalPercent, double redPercentage, double bluePercentage, double greenPercentage, double yellowPercentage, double redCorrectPer, double blueCorrectPer, double greenCorrectPer,
+    public void  createContentValues(String username, Date date, int totalCorrect, int totalIncorrect,int congruentCorrect,int congruentIncorrect,int nonCongruentCorrect,int nonCongruentIncorrect,
+                                     double redPercentage, double bluePercentage, double greenPercentage, double yellowPercentage, double redCorrectPer, double blueCorrectPer, double greenCorrectPer,
                                      double yellowCorrectPer, double redIncorrectPer, double blueIncorrectPer, double greenIncorrectPer, double yellowIncorrectPer,
-                                     Double totalAvgResponseTime, Double congruentAvgResponseTime, Double nonCongruentAvgResponseTime, Double stroopEffect) {
+                                     double totalAvgResponseTime, double congruentAvgResponseTime, double nonCongruentAvgResponseTime, double stroopEffect) {
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
         // as we are writing data in our database.
@@ -68,7 +75,12 @@ public class ResultsContentValues extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_USERNAME, username);
         contentValues.put(COLUMN_DATE, String.valueOf(date));
-        contentValues.put(COLUMN_TOTAL_PERCENT, totalPercent);
+        contentValues.put(COLUMN_TOTAL_CORRECT, totalCorrect);
+        contentValues.put(COLUMN_TOTAL_INCORRECT, totalIncorrect);
+        contentValues.put(COLUMN_TOTAL_CONGRUENT_CORRECT, congruentCorrect);
+        contentValues.put(COLUMN_TOTAL_CONGRUENT_INCORRECT, congruentIncorrect);
+        contentValues.put(COLUMN_TOTAL_NON_CONGRUENT_CORRECT, nonCongruentCorrect);
+        contentValues.put(COLUMN_TOTAL_NON_CONGRUENT_INCORRECT, nonCongruentIncorrect);
         contentValues.put(COLUMN_RED_PERCENT, redPercentage);
         contentValues.put(COLUMN_BLUE_PERCENT, bluePercentage);
         contentValues.put(COLUMN_GREEN_PERCENT, greenPercentage);
