@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="@color/black"
         tools:layout_editor_absoluteX="40dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -24,6 +24,7 @@
             android:shadowDy="1.3"
             android:shadowRadius="1.6"
             android:text="ΚΙΤΡΙΝΟ"
+            android:textAlignment="center"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/red_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,24 +90,14 @@
             android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginBottom="12dp"
             android:text="ΧΡΟΝΟΣ:"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/resultTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/yellow_button" />
-
-        <TextView
-            android:id="@+id/resultTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ΑΠΟΤΕΛΕΣΜΑΤΑ:"
+            android:textColor="#FFFFFF"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/yellow_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

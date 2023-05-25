@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 
 public class RegisterActivity extends AppCompatActivity {
     EditText usernameEditText;
@@ -49,12 +51,22 @@ public class RegisterActivity extends AppCompatActivity {
         SeekBar durationSeekBar2 = findViewById(R.id.durationSeekBar2);
         TextView timerTextView = findViewById(R.id.timerTextView);
         TextView timerTextView2 = findViewById(R.id.timerTextView2);
+
+// Set the default duration values
+        int defaultDuration1 = 5; // Default duration in seconds for durationSeekBar
+        int defaultDuration2 = 5; // Default duration in minutes for durationSeekBar2
+
+// Set the progress and text for the SeekBars and TextViews
+        durationSeekBar.setProgress(defaultDuration1);
+        timerTextView.setText(formatDuration(defaultDuration1 * 60000)); // Assuming 1 unit on SeekBar represents 30,000 milliseconds
+        durationSeekBar2.setProgress(defaultDuration2);
+        timerTextView2.setText(formatDuration(defaultDuration2 * 1000)); // Assuming 1 unit on SeekBar2 represents 60,000 milliseconds
+
         durationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // No action needed
-                int duration = progress * 30000;
+                int duration = progress * 60000;
                 String timerValue = formatDuration(duration);
                 timerTextView.setText(timerValue);
                 seekBar.setProgress(progress);
@@ -68,15 +80,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Get the selected duration value and start the timer activity
-
-
             }
         });
+
         durationSeekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // No action needed
                 int duration = progress * 1000;
                 String timerValue = formatDuration(duration);
                 timerTextView2.setText(timerValue);
@@ -91,10 +101,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Get the selected duration value and start the timer activity
-
-
             }
         });
+
+
 
 
         registerButton.setOnClickListener(new View.OnClickListener() {

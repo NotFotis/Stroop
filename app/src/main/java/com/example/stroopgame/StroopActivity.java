@@ -61,7 +61,7 @@ public class StroopActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHandler.getWritableDatabase();
         // Get references to UI elements
         wordTextView = findViewById(R.id.word_text_view);
-        resultTextView = findViewById(R.id.resultTextView);
+
         timeTextView = findViewById(R.id.timeTextView);
         redButton = findViewById(R.id.red_button);
         blueButton = findViewById(R.id.blue_button);
@@ -167,13 +167,13 @@ public class StroopActivity extends AppCompatActivity {
             checkResponseTime();
             // User chose the correct color
             correctCount++;
-            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
+
             status = 1;
         } else if (wordTextView.getCurrentTextColor() != color) {
             checkResponseTime();
             // User chose the wrong color
             incorrectCount++;
-            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
+
             status = 2;
         }
 
@@ -194,7 +194,7 @@ public class StroopActivity extends AppCompatActivity {
 
         if (responseTime > timeout) {
             timeoutCount++;
-            resultTextView.setText("ΣΩΣΤΑ: " + correctCount + " ΛΑΘΟΣ: " + incorrectCount + " Timeout: " + timeoutCount);
+
             Trial trial = trialList.get(trialNumber - 1);
             trial.setResponseTime(responseTime);
             trial.setStatus(3);
