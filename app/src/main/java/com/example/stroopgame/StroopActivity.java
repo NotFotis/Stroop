@@ -69,7 +69,7 @@ public class StroopActivity extends AppCompatActivity {
         yellowButton = findViewById(R.id.yellow_button);
 
         // Set a 5-minute timer to end the test
-        int duration = getIntent().getIntExtra("duration", 60000); // Default duration of 10 seconds
+        int duration = getIntent().getIntExtra("duration1", 60000); // Default duration of 10 seconds
         timer = new CountDownTimer(duration, 1000) {
 
                 public void onTick ( long millisUntilFinished){

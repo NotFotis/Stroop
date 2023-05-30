@@ -7,38 +7,6 @@
     android:background="#000000"
     tools:context=".RegisterActivity">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="250dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginBottom="10dp"
-        android:text="Εισαγωγή διάρκειας δοκιμασίας σε λεπτά"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/durationSeekBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <TextView
-        android:id="@+id/timerTextView2"
-        android:layout_width="65dp"
-        android:layout_height="36dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="252dp"
-        android:text="00:00"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/durationSeekBar2" />
 
     <EditText
         android:id="@+id/username"
@@ -48,13 +16,13 @@
         android:layout_marginStart="58dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="125dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="22dp"
         android:backgroundTint="@color/white"
         android:hint="Όνομα"
         android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,18 +32,20 @@
         android:id="@+id/age"
         android:layout_width="228dp"
         android:layout_height="49dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="420dp"
+        android:backgroundTint="@color/white"
         android:hint="Ηλικία"
         android:inputType="text"
-        android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
         android:textColor="#FFFFFF"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.009"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/register"
@@ -107,6 +77,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
+        android:id="@+id/textView4"
+        android:layout_width="291dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="16dp"
+        android:text="Παρακαλώ εισάγετε την ηλικία σας"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="343dp"
         android:layout_height="82dp"
@@ -125,83 +112,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53" />
 
-    <SeekBar
-        android:id="@+id/durationSeekBar"
-        android:layout_width="254dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="10dp"
-        android:max="60"
-        android:progress="10"
-        android:progressTint="#673AB7"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toStartOf="@+id/timerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/timerTextView"
-        android:layout_width="67dp"
-        android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="168dp"
-        android:layout_marginBottom="108dp"
-        android:text="00:00"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/timerTextView2"
-        app:layout_constraintStart_toEndOf="@+id/durationSeekBar"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.574" />
-
-    <SeekBar
-        android:id="@+id/durationSeekBar2"
-        android:layout_width="261dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:progressTint="#673AB7"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="295dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="10dp"
-        android:text="Εισαγωγή χρόνου μεταξύ ερεθισμάτων σε δευτερόλεπτα"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/durationSeekBar2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationSeekBar" />
-
-    <TextView
-        android:id="@+id/textView8"
+    <Button
+        android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="10dp"
-        android:text="Παρακαλώ εισάγετε την ηλικία σας"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/age"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="238dp"
+        android:layout_marginBottom="347dp"
+        android:text="Ρυθμίσεις"
+        app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationSeekBar2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/age"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
