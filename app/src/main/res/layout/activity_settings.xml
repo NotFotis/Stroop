@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,144 +13,97 @@
         android:id="@+id/textView3"
         android:layout_width="343dp"
         android:layout_height="82dp"
-        android:layout_marginStart="34dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="16dp"
         android:text="Stroop Test"
         android:textAlignment="center"
         android:textColor="#673AB7"
         android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/durationLabel1"
         android:layout_width="348dp"
         android:layout_height="30dp"
-        android:layout_marginStart="39dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="77dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="23dp"
         android:text="Συνολικός χρόνος δοκιμασίας (λεπτά)"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/timerTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:textColor="#FFFFFF" />
 
     <SeekBar
         android:id="@+id/durationSeekBar"
         android:layout_width="291dp"
         android:layout_height="23dp"
-        android:layout_marginStart="32dp"
+        android:layout_below="@+id/durationLabel1"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="36dp"
         android:max="10"
         android:progress="3"
-        android:progressTint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/durationLabel2"
-        app:layout_constraintEnd_toStartOf="@+id/timerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationLabel1" />
+        android:progressTint="#FFFFFF" />
 
     <TextView
         android:id="@+id/timerTextView"
         android:layout_width="46dp"
         android:layout_height="35dp"
-        android:layout_marginStart="11dp"
+        android:layout_below="@+id/durationSeekBar"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="31dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/durationLabel2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/durationSeekBar"
-        app:layout_constraintTop_toBottomOf="@+id/durationLabel1" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/durationLabel2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_below="@+id/timerTextView"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="400dp"
         android:text="Χρόνος μεταξύ ερεθισμάτων (δευτερόλεπτα)"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerTextView" />
+        android:textColor="#FFFFFF" />
 
     <SeekBar
         android:id="@+id/durationSeekBar2"
         android:layout_width="291dp"
         android:layout_height="23dp"
-        android:layout_marginStart="20dp"
+        android:layout_below="@+id/durationLabel2"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="28dp"
         android:max="10"
         android:progress="2"
-        android:progressTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/timerTextView2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationLabel2"
-        app:layout_constraintVertical_bias="0.018" />
+        android:progressTint="#FFFFFF" />
 
     <TextView
         android:id="@+id/timerTextView2"
         android:layout_width="46dp"
         android:layout_height="35dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="44dp"
-
-        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/durationSeekBar2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/durationSeekBar2"
-        app:layout_constraintTop_toBottomOf="@+id/durationLabel2" />
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/doneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="115dp"
-        android:layout_marginTop="201dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="51dp"
-        android:text="Αποθήκευση"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationSeekBar2" />
+        android:layout_below="@+id/timerTextView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Αποθήκευση" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="109dp"
         android:layout_height="34dp"
-        android:layout_marginStart="128dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="30dp"
         android:text="Ρυθμίσεις"
         android:textColor="#673AB7"
         android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/durationLabel1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

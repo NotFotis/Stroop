@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,126 +7,91 @@
     android:background="#000000"
     tools:context=".RegisterActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Stroop Test"
+        android:textAlignment="center"
+        android:textColor="#673AB7"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Παρακαλώ εισάγετε το όνομά σας"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/username"
         style="@android:style/Widget.Holo.Light.AutoCompleteTextView"
-        android:layout_width="228dp"
+        android:layout_width="235dp"
         android:layout_height="49dp"
-        android:layout_marginStart="58dp"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="125dp"
         android:layout_marginBottom="22dp"
         android:backgroundTint="@color/white"
         android:hint="Όνομα"
         android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/username"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="Παρακαλώ εισάγετε την ηλικία σας"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/age"
-        android:layout_width="228dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="420dp"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="22dp"
         android:backgroundTint="@color/white"
         android:hint="Ηλικία"
         android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/register"
-        android:layout_width="wrap_content"
+        android:layout_width="186dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="139dp"
-        android:layout_marginEnd="174dp"
-        android:layout_marginBottom="52dp"
+        android:layout_below="@+id/settingsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="159dp"
         android:text="ΕΙΣΟΔΟΣ"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="291dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="8dp"
-        android:text="Παρακαλώ εισάγετε το όνομά σας"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="291dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="16dp"
-        android:text="Παρακαλώ εισάγετε την ηλικία σας"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/age"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="343dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="25dp"
-        android:text="Stroop Test"
-        android:textAlignment="center"
-        android:textColor="#673AB7"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintTop_toBottomOf="@+id/age" />
 
     <Button
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="238dp"
-        android:layout_marginBottom="347dp"
+        android:layout_below="@+id/age"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="Ρυθμίσεις"
-        app:layout_constraintBottom_toTopOf="@+id/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
